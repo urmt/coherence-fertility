@@ -1,0 +1,27 @@
+```
+field light_model {
+  intensity: 5.0,
+  position: [0.0, 0.0]
+}
+
+tension {
+  sense(light) < intensity => act(move, [0.1, 0.1]);
+  sense(light) > intensity => act(move, [-0.1, -0.1])
+}
+
+drift intensity adaptively using tension_history
+constrain tension(sense(light), intensity) < 2.0
+
+resolve minimize(tension(sense(light), intensity))
+
+metaweave define sense_proximity as sense(proximity_sensor)
+
+extend field light_model with proximity: 0.0 when sense(proximity_sensor) > 0
+
+loop 10 {
+  execute tension
+  execute drift
+  execute resolve
+  execute metaweave if tension > 3.0
+}
+```

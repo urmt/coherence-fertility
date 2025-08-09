@@ -1,0 +1,12 @@
+program = { (tension | drift | resolve | field | metaweave | extend | loop)* }
+tension = { "tension" "{" condition "=>" action ";" "}" }
+drift = { "drift" ident "adaptively" "using" "tension_history" }
+resolve = { "resolve" "minimize" "(" "tension" "(" "sense" "(" ident ")" "," ident ")" ")" }
+field = { "field" ident "{" (ident ":" number)* "}" }
+metaweave = { "metaweave" "define" ident "as" action }
+extend = { "extend" "field" ident "with" ident ":" number "when" condition }
+loop = { "loop" number "{" statement* "}" }
+condition = { "sense" "(" ident ")" ("<" | ">") ident }
+action = { "act" "(" ident "," "[" number "," number "]" ")" }
+ident = { [a-zA-Z_][a-zA-Z0-9_]* }
+number = { "-"? [0-9]+ ("." [0-9]+)? }

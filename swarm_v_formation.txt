@@ -1,0 +1,42 @@
+field robot1 {
+  position: [0.0, 0.0],
+  target_distance: 1.0
+}
+field robot2 {
+  position: [1.0, 0.5],
+  target_distance: 1.0
+}
+field robot3 {
+  position: [1.0, -0.5],
+  target_distance: 1.0
+}
+
+tension {
+  sense(distance, robot1, robot2) > target_distance => act(move_toward, robot1, robot2);
+  sense(distance, robot1, robot2) < target_distance => act(move_away, robot1, robot2);
+  sense(distance, robot2, robot3) > target_distance => act(move_toward, robot2, robot3);
+  sense(distance, robot2, robot3) < target_distance => act(move_away, robot2, robot3)
+}
+
+drift robot1.target_distance adaptively using tension_history
+drift robot2.target_distance adaptively using tension_history
+drift robot3.target_distance adaptively using tension_history
+
+constrain tension(sense(distance, robot1, robot2), robot1.target_distance) < 1.5
+constrain tension(sense(distance, robot2, robot3), robot2.target_distance) < 1.5
+
+resolve minimize(tension(sense(distance, robot1, robot2), robot1.target_distance))
+resolve minimize(tension(sense(distance, robot2, robot3), robot2.target_distance))
+
+metaweave define sense_wind as sense(wind_sensor)
+
+extend field robot1 with wind_speed: 0.0 when sense(wind_sensor) > 0
+extend field robot2 with wind_speed: 0.0 when sense(wind_sensor) > 0
+extend field robot3 with wind_speed: 0.0 when sense(wind_sensor) > 0
+
+loop 10 {
+  execute tension
+  execute drift
+  execute resolve
+  execute metaweave if tension > 2.0
+}
