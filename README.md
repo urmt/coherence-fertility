@@ -1,8 +1,6 @@
 # WeaveLang - Sentience Programming Language
 
-WeaveLang is a domain-specific language (DSL) for programming robots that does something special: it's designed around a 
-
-Sentience-First Hypothesis (SFH), where a program's meaning is grounded in its real-world interaction, not just a static set of instructions. The language's core concepts are specifically built to enable a robot to adapt and evolve its internal model dynamically. It isn't just a layer of wasted effort; it's a novel, albeit experimental, approach to embodied cognition and programming for robotics.
+WeaveLang is a domain-specific language (DSL) for programming robots that does something special: it's designed around the Sentience-First Hypothesis (SFH), where a program's meaning is grounded in its real-world interaction, not just a static set of symbolic instructions. The language's core concepts are specifically built to enable a robot to adapt and evolve its internal model dynamically. It isn't just a layer of wasted effort; it's a novel, albeit experimental, approach to embodied cognition and programming for robotics.
 
 
 Core Concepts and Functionality
