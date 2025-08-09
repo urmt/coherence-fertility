@@ -4,9 +4,7 @@ WeaveLang is a domain-specific language (DSL) for programming robots that does s
 
 
 Core Concepts and Functionality
-WeaveLang's programs are not linear sets of commands but rather define a 
-
-tension-drift-resolution cycle that the robot executes. This cycle allows the program to respond to unexpected events and change its own behavior:
+WeaveLang's programs are not linear sets of commands but rather define a tension-drift-resolution cycle that the robot executes. This cycle allows the program to respond to unexpected events and change its own behavior:
 
 Tension: This is the core mechanism for detecting a mismatch between a robot's internal model (its "expectations") and the data it receives from its sensors. The syntax tension { sense(...) < value => act(...) } explicitly links a sensory observation to an action triggered by a mismatch.
 
