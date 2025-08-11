@@ -71,6 +71,20 @@ impl WeaveLang {
         println!("Defined new primitive: {} as {}", primitive, action);
     }
 
+    fn remove_at(&mut self, list_name: &str, index: usize) -> Option<f64> {
+        if let Some(vector) = self.vector_model.get_mut(list_name) {
+            if index < vector.len() {
+                let removed_value = vector.remove(index);
+                self.coherence = 1.0 / (1.0 + self.tension_history.iter().sum::<f64>() / self.tension_history.len().max(1) as f64); // Update coherence based on tension history
+                Some(removed_value)
+            } else {
+                None // Index out of bounds
+            }
+        } else {
+            None // List not found
+        }
+    }
+
     fn execute(&mut self, code: &str) {
         let pairs = WeaveParser::parse(Rule::program, code).unwrap_or_else(|e| panic!("{}", e));
         for pair in pairs {
@@ -147,6 +161,16 @@ impl WeaveLang {
                         self.execute(inner_code);
                     }
                 }
+                Rule::remove => {
+                    let parts: Vec<_> = pair.into_inner().collect();
+                    let list_name = parts[0].as_str();
+                    let index = parts[1].as_str().parse::<usize>().unwrap_or(0);
+                    if let Some(removed) = self.remove_at(list_name, index) {
+                        println!("Removed {} from {} at index {}", removed, list_name, index);
+                    } else {
+                        println!("Failed to remove: invalid list or index");
+                    }
+                }
                 _ => {}
             }
         }
@@ -156,7 +180,11 @@ impl WeaveLang {
 fn main() {
     let mut weavelang = WeaveLang::new();
     weavelang.model.insert("intensity".to_string(), 5.0);
-    weavelang.vector_model.insert("position".to_string(), vec![0.0, 0.0]);
+    weavelang.vector_model.insert("position".to_string(), vec![0.0, 0.0, 1.0, 2.0, 3.0]); // Example list
     let code = include_str!("light_seeker.weave");
     weavelang.execute(code);
+    // Example remove operation
+    if let Some(removed) = weavelang.remove_at("position", 2) {
+        println!("Manually removed: {}", removed);
+    }
 }
