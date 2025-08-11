@@ -131,7 +131,7 @@ Neural network proposed: sense_wind as sense(wind_sensor)
 ```
 
 ## Using LLMs for WeaveLang
-LLMs (e.g., Grok) can generate and debug WeaveLang code.
+LLMs (e.g., Grok, ChatGPT) can generate and debug WeaveLang code provided you give it links to the github files or upload the files that explain how it functions and how to program it.
 
 ### General Projects
 - **Prompt**:  
@@ -172,7 +172,7 @@ LLMs (e.g., Grok) can generate and debug WeaveLang code.
 See `CONTRIBUTING.md` for guidelines.
 
 ## Resources
-- **GitHub**: https://github.com/weavelang/weavelang  
+- **GitHub**: https://github.com/urmt/coherence-fertility  
 - **Godot Docs**: https://docs.godotengine.org/en/stable  
 - **Rust Docs**: https://doc.rust-lang.org  
-- **SFH**: Chapter 30 for theoretical insights.
+- **SFH**: https://github.com/urmt/coherence-fertility/blob/main/docs/SFH_summary.md
